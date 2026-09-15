@@ -5,6 +5,7 @@ import me.basehub.handlers.HealthHandler
 import me.basehub.plugins.configureDatabase
 import me.basehub.plugins.configureMonitoring
 import me.basehub.plugins.configureSerialization
+import me.basehub.plugins.configureStatusPages
 import me.basehub.routes.configureRouting
 
 fun Application.module() {
