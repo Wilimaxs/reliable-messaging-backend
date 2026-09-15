@@ -14,7 +14,6 @@ fun Application.module() {
         dataSource = datasource,
     )
 
-    configureDatabase()
     configureMonitoring()
     configureSerialization()
 

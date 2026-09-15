@@ -1,20 +1,18 @@
 package me.basehub.handlers
 
-import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
-import io.ktor.server.response.respond
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.Serializable
+import me.basehub.common.response.respondError
+import me.basehub.common.response.respondSuccess
 import javax.sql.DataSource
 
 class HealthHandler(
     private val dataSource: DataSource,
 ) {
     suspend fun health(call: ApplicationCall) {
-        call.respond(
-            status = HttpStatusCode.OK,
-            message = HealthResponse(status = "up"),
+        call.respondSuccess(
+            message = "Up",
         )
     }
 
@@ -32,18 +30,13 @@ class HealthHandler(
         }
 
         if (databaseReady) {
-            call.respond(
-                status = HttpStatusCode.OK,
-                message = HealthResponse(status = "ready"),
+            call.respondSuccess(
+                message = "Ready",
             )
         } else {
-            call.respond(
-                status = HttpStatusCode.NotFound,
-                message = HealthResponse(status = "not found")
+            call.respondError(
+                message = "Database is not ready"
             )
         }
     }
 }
-
-@Serializable
-data class HealthResponse(val status: String)

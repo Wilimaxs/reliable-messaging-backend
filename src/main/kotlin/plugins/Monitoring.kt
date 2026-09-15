@@ -1,10 +1,11 @@
 package me.basehub.plugins
 
+import io.ktor.http.HttpHeaders
 import io.ktor.server.application.*
-import io.ktor.http.*
 import io.ktor.server.plugins.callid.*
 import io.ktor.server.plugins.calllogging.CallLogging
 import org.slf4j.event.Level
+import java.util.UUID.randomUUID
 
 fun Application.configureMonitoring() {
     /*
@@ -13,17 +14,17 @@ fun Application.configureMonitoring() {
     *
     */
     install(CallId) {
-        header(HttpHeaders.XRequestId)
-        verify { callId: String ->
-            callId.isNotEmpty()
+        generate {
+            randomUUID().toString()
         }
+        replyToHeader(HttpHeaders.XRequestId)
     }
     /*
     *
     * Write and show methode, Url, status response, and request activity
     *
     */
-    install(CallLogging){
+    install(CallLogging) {
         level = Level.INFO
         callIdMdc("call-id")
     }
