@@ -1,0 +1,36 @@
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+
+# Gradle and Kotlin build state
+.gradle/
+.kotlin/
+build/
+**/build/
+out/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Compiled JVM artifacts and logs
+*.class
+*.log
+hs_err_pid*
+replay_pid*
+
+# Local databases
+*.mv.db
+*.trace.db
+
+# Local machine configuration
+local.properties
+
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
