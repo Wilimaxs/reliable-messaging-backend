@@ -4,6 +4,8 @@ import io.ktor.server.application.Application
 import me.basehub.handlers.HealthHandler
 import me.basehub.plugins.configureDatabase
 import me.basehub.plugins.configureMonitoring
+import me.basehub.plugins.configureSerialization
+import me.basehub.routes.configureRouting
 
 fun Application.module() {
     val datasource = configureDatabase()
@@ -14,8 +16,8 @@ fun Application.module() {
 
     configureDatabase()
     configureMonitoring()
-
     configureSerialization()
+
     configureStatusPages()
     configureRequestValidation()
     configureRateLimiting()
