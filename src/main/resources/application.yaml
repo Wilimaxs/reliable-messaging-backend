@@ -10,3 +10,9 @@ database:
   user: ${DATABASE_USER}
   password: ${DATABASE_PASSWORD}
   driver: "org.postgresql.Driver"
+
+jwt:
+  secret: ${JWT_SECRET}
+  issuer: "reliable-messaging-backend"
+  audience: "reliable-messaging-mobile"
+  realm: "reliable-messaging-api"
