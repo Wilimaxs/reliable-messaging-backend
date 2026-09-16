@@ -1,5 +1,6 @@
 package me.basehub.handlers
 
+import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -35,6 +36,7 @@ class HealthHandler(
             )
         } else {
             call.respondError(
+                httpStatus = HttpStatusCode.ServiceUnavailable,
                 message = "Database is not ready"
             )
         }

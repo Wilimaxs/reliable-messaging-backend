@@ -1,15 +1,18 @@
 package me.basehub.common.response
 
+import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.response.respond
 
 suspend inline fun <reified T> ApplicationCall.respondSuccess(
     message: String,
     data: T?,
+    httpStatus: HttpStatusCode = HttpStatusCode.OK,
     meta: PaginationMeta? = null
 ) {
     respond(
-        ApiResponse(
+        status = httpStatus,
+        message = ApiResponse(
             status = true,
             message = message,
             data = data,
@@ -18,12 +21,14 @@ suspend inline fun <reified T> ApplicationCall.respondSuccess(
     )
 }
 
-suspend inline fun ApplicationCall.respondSuccess(
+suspend fun ApplicationCall.respondSuccess(
     message: String,
+    httpStatus: HttpStatusCode = HttpStatusCode.OK,
     meta: PaginationMeta? = null
 ) {
     respond(
-        ApiResponse(
+        status = httpStatus,
+        message = ApiResponse<Unit>(
             status = true,
             message = message,
             data = null,
@@ -33,11 +38,13 @@ suspend inline fun ApplicationCall.respondSuccess(
 }
 
 suspend inline fun ApplicationCall.respondError(
+    httpStatus: HttpStatusCode,
     message: String,
     meta: PaginationMeta? = null
 ) {
     respond(
-        ApiResponse(
+        status = httpStatus,
+        message = ApiResponse(
             status = false,
             message = message,
             data = null,

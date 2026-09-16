@@ -14,36 +14,32 @@ fun Application.configureStatusPages() {
 
         // application error
         exception<ApiException> { call, cause ->
-            call.response.status(cause.statusCode)
-
             call.respondError(
+                httpStatus = cause.statusCode,
                 message = cause.message
             )
         }
 
         // Request validation Error
         exception<RequestValidationException> { call, cause ->
-            call.response.status(HttpStatusCode.BadRequest)
-
             call.respondError(
+                httpStatus = HttpStatusCode.BadRequest,
                 message = cause.reasons.joinToString(", ")
             )
         }
 
         // Malformed request bodies
         exception<ContentTransformationException> { call, _ ->
-            call.response.status(HttpStatusCode.BadRequest)
-
             call.respondError(
+                httpStatus = HttpStatusCode.BadRequest,
                 message = "Invalid request body"
             )
         }
 
         // Bad request
         exception<BadRequestException> { call, _ ->
-            call.response.status(HttpStatusCode.BadRequest)
-
             call.respondError(
+                httpStatus = HttpStatusCode.BadRequest,
                 message = "Invalid request"
             )
         }
@@ -66,9 +62,10 @@ fun Application.configureStatusPages() {
                 HttpStatusCode.ServiceUnavailable -> "Service unavailable"
                 else -> "Request failed"
             }
-
-            call.response.status(status)
-            call.respondError(message = message)
+            call.respondError(
+                httpStatus = status,
+                message = message
+            )
         }
 
         // Hides unexpected internal errors.
@@ -77,10 +74,8 @@ fun Application.configureStatusPages() {
                 "Unhandled exception",
                 cause
             )
-
-            call.response.status(HttpStatusCode.InternalServerError)
-
             call.respondError(
+                httpStatus = HttpStatusCode.InternalServerError,
                 message = "Internal server error"
             )
         }

@@ -6,7 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
-import io.ktor.server.response.respond
+import me.basehub.common.response.respondError
 
 const val JWT_AUTH_PROVIDER = "auth-jwt"
 
@@ -40,7 +40,10 @@ fun Application.configureSecurity() {
                     null
             }
             challenge { _, _ ->
-                call.respond(HttpStatusCode.Unauthorized)
+                call.respondError(
+                    httpStatus = HttpStatusCode.Unauthorized,
+                    message = "Invalid token"
+                )
             }
         }
     }
