@@ -21,8 +21,6 @@ fun Application.module() {
 
     configureStatusPages()
     configureRequestValidation()
-    configureRateLimiting()
-
     configureSecurity()
     configureWebsockets()
 

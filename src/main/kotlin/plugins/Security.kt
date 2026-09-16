@@ -7,6 +7,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import me.basehub.common.response.respondError
+import me.basehub.common.security.AuthenticatedUserPrincipal
 
 const val JWT_AUTH_PROVIDER = "auth-jwt"
 
@@ -35,7 +36,7 @@ fun Application.configureSecurity() {
                 val tokenType = credential.payload.getClaim("type").asString()
                 val expiresAt = credential.expiresAt
                 if (!userId.isNullOrBlank() && tokenType == "access" && expiresAt != null)
-                    JWTPrincipal(credential.payload)
+                    AuthenticatedUserPrincipal(userId = userId)
                 else
                     null
             }
